@@ -84,7 +84,7 @@ def game():
 
     handle_closeout = Return(Int(1))
     handle_updateapp = Return(Int(0))
-    handle_deleteapp = Return(Int(1))
+    handle_deleteapp = Return(Int(0))
 
     program = Cond(
         [Txn.application_id() == Int(0), handle_creation],
