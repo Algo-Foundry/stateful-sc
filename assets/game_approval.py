@@ -1,4 +1,3 @@
-import random
 from pyteal import *
 
 def game():
@@ -62,6 +61,7 @@ def game():
     '''
     mvp = App.globalGet(Bytes("Mvp"))
     reward_player = Seq([
+        Assert(Txn.sender() == Global.creator_address()),
         Assert(currentMonsterHealth <= Int(0)),
         Assert(Txn.accounts[1] == mvp),
         InnerTxnBuilder.Begin(),
