@@ -77,13 +77,36 @@ let defaultCfg = {
   // indexerCfg: indexerCfg
 };
 
-// purestake testnet config
+/**
+ * TESTNET CONFIG USING PURESTAKE
+ */
+let accounts_testnet = mkAccounts([
+  {
+    // This account is created using `make setup-master-account` command from our
+    // `/infrastructure` directory. It already has many ALGOs
+    name: "master",
+    addr: process.env.ADDR_CREATOR_TESTNET,
+    mnemonic: process.env.MNEMONIC_CREATOR_TESTNET,
+  },
+  {
+    name: "acc1",
+    addr: process.env.ACC1_ADDR_TESTNET,
+    mnemonic: process.env.ACC1_MNEMONIC_TESTNET,
+  },
+  {
+    name: "acc2",
+    addr: process.env.ACC2_ADDR,
+    mnemonic: process.env.ACC2_MNEMONIC,
+  }
+]);
+
 let purestakeTestNetCfg = {
-  host: "https://testnet-algorand.api.purestake.io/ps2",
+  host: process.env.ALGOD_ADDR_TESTNET,
   port: "",
   token: {
-    "X-API-Key": "Xhkn7v7h972hj7Egx3fGr9RFbfXeGuoD6wSLKDyG",
+    "X-API-Key": process.env.ALGOD_TOKEN_TESTNET,
   },
+  accounts: accounts_testnet
 };
 
 // You can also use Environment variables to get Algod credentials
