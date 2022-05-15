@@ -103,9 +103,7 @@ let accounts_testnet = mkAccounts([
 let purestakeTestNetCfg = {
   host: process.env.ALGOD_ADDR_TESTNET,
   port: "",
-  token: {
-    "X-API-Key": process.env.ALGOD_TOKEN_TESTNET,
-  },
+  token: JSON.parse(process.env.ALGOD_TOKEN_TESTNET),
   accounts: accounts_testnet
 };
 
