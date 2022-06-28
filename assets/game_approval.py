@@ -30,9 +30,9 @@ def game():
     playerTotalDamage = playerCurrentDamage + playerDamage
     currentMvpDamage = App.globalGet(Bytes("MaxDamage")) # highest amount of damage dealt to monster    
     
-    update_player_total_damage = Seq(
+    update_player_total_damage = Seq([
         App.localPut(Txn.sender(), Bytes("Damage"), playerTotalDamage),
-    )
+    ])
 
     update_monster_health = If(
         playerDamage > currentMonsterHealth, 

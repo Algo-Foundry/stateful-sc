@@ -104,7 +104,7 @@ let purestakeTestNetCfg = {
   host: process.env.ALGOD_ADDR_TESTNET,
   port: "",
   token: JSON.parse(process.env.ALGOD_TOKEN_TESTNET),
-  accounts: accounts_testnet
+  accounts: accounts_testnet,
 };
 
 // You can also use Environment variables to get Algod credentials

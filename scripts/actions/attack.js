@@ -15,6 +15,7 @@ async function run(runtimeEnv, deployer) {
 
     // commence attack
     const attackAppArgs = ["Attack"].map(convert.stringToBytes);
+
     await executeTransaction(deployer, {
         type: types.TransactionType.CallApp,
         sign: types.SignType.SecretKey,

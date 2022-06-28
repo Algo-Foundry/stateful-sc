@@ -29,7 +29,7 @@ async function run(runtimeEnv, deployer) {
     };
 
     const debug = new Tealdbg(deployer, txParams);
-    await debug.dryRunResponse('attack_dryrun.json');
+    await debug.dryRunResponse('attack_dryrun.json', true);
 }
 
 module.exports = { default: run };

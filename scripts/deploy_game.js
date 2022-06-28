@@ -1,4 +1,4 @@
-const { executeTransaction, convert } = require("@algo-builder/algob");
+const { executeTransaction, convert, readAppGlobalState } = require("@algo-builder/algob");
 const { types } = require("@algo-builder/web");
 
 async function run(runtimeEnv, deployer) {
@@ -34,8 +34,12 @@ async function run(runtimeEnv, deployer) {
 
     // get app info
     const gameApp = deployer.getApp(approvalFile, clearStateFile);
+    console.log(gameApp);
     const gameAppAddress = gameApp.applicationAccount;
     console.log("app account address:", gameAppAddress);
+
+    let globalState = await readAppGlobalState(deployer, master.addr, gameApp.appID);
+    console.log(globalState);
 
     // fund account with 20 algos
     await executeTransaction(deployer, {

@@ -18,8 +18,8 @@ async function run(runtimeEnv, deployer) {
 
     /**
      * Debug using TEAL debugger
-     * 1. ./sandbox copyTo ../af-assignments/stateful-sc/assets/dryrun.json
-     * 2. ./sandbox tealdbg debug -d dryrun.json --remote-debugging-port 9392
+     * 1. ./sandbox copyTo ../af-assignments/stateful-sc/dryrun.msgp
+     * 2. ./sandbox tealdbg debug -d dryrun.msgp --remote-debugging-port 9392
      * 3. Chrome URL: chrome://inspect/#devices
      */
     const suggestedParams = await deployer.algodClient.getTransactionParams().do();
