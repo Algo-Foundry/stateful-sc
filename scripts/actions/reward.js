@@ -14,6 +14,10 @@ async function run(runtimeEnv, deployer) {
     let globalState = await readAppGlobalState(deployer, master.addr, appID);
     console.log(globalState);
 
+    // amount before
+    let appAccount = await deployer.algodClient.accountInformation(gameAppAddress).do();
+    const amountBefore = appAccount["amount"];
+
     // get mvp address
     const mvp = algosdk.encodeAddress(Buffer.from(globalState.get("Mvp"), 'base64'));
 
@@ -30,8 +34,9 @@ async function run(runtimeEnv, deployer) {
     });
 
     // get app account balance
-    let appAccount = await deployer.algodClient.accountInformation(gameAppAddress).do();
-    console.log(appAccount);
+    appAccount = await deployer.algodClient.accountInformation(gameAppAddress).do();
+    console.log("contract amount before: ", amountBefore);
+    console.log("contract amount after: ", appAccount["amount"]);
 }
 
 module.exports = { default: run };
