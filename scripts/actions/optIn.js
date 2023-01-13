@@ -1,4 +1,4 @@
-const { convert, readAppGlobalState, readAppLocalState } = require("@algo-builder/algob");
+const { readAppGlobalState, readAppLocalState } = require("@algo-builder/algob");
 const { types } = require("@algo-builder/web");
 
 async function run(runtimeEnv, deployer) {
