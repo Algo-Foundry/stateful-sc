@@ -69,6 +69,7 @@ def game():
             TxnField.type_enum: TxnType.Payment,
             TxnField.receiver: Txn.accounts[1],
             TxnField.amount: Int(1000000),
+            TxnField.fee: Int(0)
         }),
         InnerTxnBuilder.Submit(),
         Return(Int(1))

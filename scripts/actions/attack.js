@@ -4,11 +4,10 @@ const { types } = require("@algo-builder/web");
 async function run(runtimeEnv, deployer) {
     const master = deployer.accountsByName.get("master");
     const acc1 = deployer.accountsByName.get("acc1");
-    const approvalFile = "game_approval.py";
-    const clearStateFile = "game_clearstate.py";
+    const appName = "gameApp";
 
     // get app info
-    const gameApp = deployer.getApp(approvalFile, clearStateFile);
+    const gameApp = deployer.getApp(appName);
     const appID = gameApp.appID;
     let globalState = await readAppGlobalState(deployer, master.addr, appID);
     console.log(globalState);
@@ -16,7 +15,7 @@ async function run(runtimeEnv, deployer) {
     // commence attack
     const attackAppArgs = ["Attack"].map(convert.stringToBytes);
 
-    await executeTransaction(deployer, {
+    await deployer.executeTx({
         type: types.TransactionType.CallApp,
         sign: types.SignType.SecretKey,
         fromAccount: acc1,
@@ -24,6 +23,14 @@ async function run(runtimeEnv, deployer) {
         payFlags: { totalFee: 1000 },
         appArgs: attackAppArgs,
     });
+    // await executeTransaction(deployer, {
+    //     type: types.TransactionType.CallApp,
+    //     sign: types.SignType.SecretKey,
+    //     fromAccount: acc1,
+    //     appID: appID,
+    //     payFlags: { totalFee: 1000 },
+    //     appArgs: attackAppArgs,
+    // });
 
     // get global and local state
     globalState = await readAppGlobalState(deployer, master.addr, appID);

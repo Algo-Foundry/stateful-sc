@@ -1,15 +1,14 @@
-const { convert, Tealdbg, signTransactions } = require("@algo-builder/algob");
+const { convert, Tealdbg } = require("@algo-builder/algob");
 const { types } = require("@algo-builder/web");
 const algosdk = require("algosdk");
 const fs = require("fs");
 
 async function run(runtimeEnv, deployer) {
     const acc1 = deployer.accountsByName.get("acc1");
-    const approvalFile = "game_approval.py";
-    const clearStateFile = "game_clearstate.py";
+    const appName = "gameApp";
 
     // get app info
-    const gameApp = deployer.getApp(approvalFile, clearStateFile);
+    const gameApp = deployer.getApp(appName);
 
     const gameAppAddress = gameApp.applicationAccount;
     console.log("app account address:", gameAppAddress);

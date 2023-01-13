@@ -1,10 +1,8 @@
-const { executeTransaction, convert, readAppGlobalState } = require("@algo-builder/algob");
+const { convert, readAppGlobalState } = require("@algo-builder/algob");
 const { types } = require("@algo-builder/web");
 
 async function run(runtimeEnv, deployer) {
     const master = deployer.accountsByName.get("master");
-    const approvalFile = "game_approval.py";
-    const clearStateFile = "game_clearstate.py";
 
     /**
      * Create Application
@@ -17,23 +15,27 @@ async function run(runtimeEnv, deployer) {
      * Local Ints
      * 1. Damage
      */
+    const appName = "gameApp";
     const monsterHealth = 5;
+    const appArgs = [convert.uint64ToBigEndian(monsterHealth)];
     await deployer.deployApp(
-        approvalFile,
-        clearStateFile,
+        master,
         {
-            sender: master,
+            approvalProgramFilename: "game_approval.py",
+            clearProgramFilename: "game_clearstate.py",
+            metaType: types.MetaType.FILE,
+            appName,
             localInts: 1,
             localBytes: 0,
             globalInts: 2,
             globalBytes: 1,
-            appArgs: [convert.uint64ToBigEndian(monsterHealth)],
+            appArgs
         },
         { totalFee: 1000 }
-    );
+    )
 
     // get app info
-    const gameApp = deployer.getApp(approvalFile, clearStateFile);
+    const gameApp = deployer.getApp(appName);
     console.log(gameApp);
     const gameAppAddress = gameApp.applicationAccount;
     console.log("app account address:", gameAppAddress);
@@ -42,7 +44,7 @@ async function run(runtimeEnv, deployer) {
     console.log(globalState);
 
     // fund account with 20 algos
-    await executeTransaction(deployer, {
+    await deployer.executeTx({
         type: types.TransactionType.TransferAlgo,
         sign: types.SignType.SecretKey,
         fromAccount: master,

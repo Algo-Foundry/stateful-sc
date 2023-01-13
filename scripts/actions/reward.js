@@ -1,14 +1,13 @@
-const { executeTransaction, convert, readAppGlobalState } = require("@algo-builder/algob");
+const { convert, readAppGlobalState } = require("@algo-builder/algob");
 const { types } = require("@algo-builder/web");
 const algosdk = require("algosdk");
 
 async function run(runtimeEnv, deployer) {
     const master = deployer.accountsByName.get("master");
-    const approvalFile = "game_approval.py";
-    const clearStateFile = "game_clearstate.py";
+    const appName = "gameApp";
 
     // get app info
-    let gameApp = deployer.getApp(approvalFile, clearStateFile);
+    let gameApp = deployer.getApp(appName);
     const appID = gameApp.appID;
     const gameAppAddress = gameApp.applicationAccount;
     let globalState = await readAppGlobalState(deployer, master.addr, appID);
@@ -23,12 +22,12 @@ async function run(runtimeEnv, deployer) {
 
     // reward
     const rewardAppArgs = ["Reward"].map(convert.stringToBytes);
-    await executeTransaction(deployer, {
+    await deployer.executeTx({
         type: types.TransactionType.CallApp,
         sign: types.SignType.SecretKey,
         fromAccount: master,
         appID: appID,
-        payFlags: { totalFee: 1000 },
+        payFlags: { totalFee: 2000 }, // creator will pay for the inner txn fees
         appArgs: rewardAppArgs,
         accounts: [mvp]
     });
