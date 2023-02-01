@@ -23,14 +23,6 @@ async function run(runtimeEnv, deployer) {
         payFlags: { totalFee: 1000 },
         appArgs: attackAppArgs,
     });
-    // await executeTransaction(deployer, {
-    //     type: types.TransactionType.CallApp,
-    //     sign: types.SignType.SecretKey,
-    //     fromAccount: acc1,
-    //     appID: appID,
-    //     payFlags: { totalFee: 1000 },
-    //     appArgs: attackAppArgs,
-    // });
 
     // get global and local state
     globalState = await readAppGlobalState(deployer, master.addr, appID);
